@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package inventory;
+option go_package = "./proto";
+
+service InventoryService {
+  rpc DeductStock (DeductRequest) returns (DeductResponse);
+  rpc CheckScarcity (ScarcityRequest) returns (ScarcityResponse);
+}
+
+message DeductRequest {
+  map<string, int32> ingredients = 1;
+}
+
+message DeductResponse {
+  bool success = 1;
+  string message = 2;
+  repeated string scarcity_alerts = 3;
+}
+
+message ScarcityRequest {}
+
+message ScarcityResponse {
+  repeated string alerts = 1;
+}

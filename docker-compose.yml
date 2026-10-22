@@ -1,0 +1,38 @@
+services:
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["/app/api-gateway"]
+    ports:
+      - "8080:8080"
+    depends_on:
+      - order-service
+      - ai-agent
+
+  order-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["/app/order-service"]
+    ports:
+      - "50052:50052"
+    depends_on:
+      - inventory-service
+
+  inventory-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["/app/inventory-service"]
+    ports:
+      - "50051:50051"
+
+  ai-agent:
+    build:
+      context: .
+      dockerfile: ai-agent/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - GEMINI_API_KEY={GEMINI_API_KEY}

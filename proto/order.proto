@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package order;
+option go_package = "./proto";
+
+service OrderService {
+  rpc PlaceOrder (OrderRequest) returns (OrderResponse);
+}
+
+message OrderRequest {
+  string customer_name = 1;
+  string cuisine_type = 2;
+  string items = 3;
+  map<string, int32> ingredients = 4;
+  bool payment_done = 5;
+}
+
+message OrderResponse {
+  string status = 1;
+  string message = 2;
+}
